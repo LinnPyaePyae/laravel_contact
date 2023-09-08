@@ -22,28 +22,14 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::prefix('v1')->group(function(){
+Route::prefix("v1")->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::apiResource('contact', ContactController::class);
+        Route::post('logout', [ApiAuthController::class, "logout"]);
+        Route::post('logout-all', [ApiAuthController::class, "logoutAll"]);
+        Route::get('devices', [ApiAuthController::class, "devices"]);
+    });
 
     Route::post('register', [ApiAuthController::class, "register"]);
-
     Route::post('login', [ApiAuthController::class, "login"]);
-    Route::post('logout', [ApiAuthController::class, "logout"])->middleware('auth:sanctum');
-
-    Route::post('logoutAll', [ApiAuthController::class, "logoutAll"])->middleware('auth:sanctum');
-
-    Route::post('devices', [ApiAuthController::class, "devices"])->middleware('auth:sanctum');
-
-    Route::apiResource("contact",ContactController::class)->middleware('auth:sanctum');
-
-   Route::post('search',[SearchRecord::class,"store"]);
-
-   Route::delete('search',[SearchRecord::class,"destroy"]);
-
-   Route::post('fav',[Favorite::class,"store"]);
-
-   Route::delete('fav',[Favorite::class,"destroy"]);
-
-
 });
-
-

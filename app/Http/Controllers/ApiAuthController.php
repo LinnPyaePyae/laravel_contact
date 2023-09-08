@@ -53,7 +53,7 @@ class ApiAuthController extends Controller
 
     public function logout(Request $request)
     {
-            //လက်ရှိတုန်ကန်ကိုဖျက်တာ
+            //လက်ရှိ token ကိုဖျက်တာ
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             "message" => "logout successfully",

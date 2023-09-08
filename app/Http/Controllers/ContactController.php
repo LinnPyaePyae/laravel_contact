@@ -19,17 +19,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        // $contacts = Contact::latest('id')->paginate(5)->withQueryString();
+        $contacts = Contact::latest('id')->paginate(5)->withQueryString();
         // return response()->json($contacts);
 
-        // $contacts = Contact::when(request()->has("keyword"),function($query){
-        //     $query->where(function())
-        // })
-
-
         // Controlling data that u want to show using resource collection
-        // return ContactResource::collection($contacts);
-        // return response()->json(["message"=>"success"]);
+        return ContactResource::collection($contacts);
     }
 
     /**
@@ -50,6 +44,9 @@ class ContactController extends Controller
             "user_id" => Auth::id()
             // "user_id" => $request->user_id
         ]);
+
+
+
         return new ContactDetailResource($contact);
 
     }
@@ -104,6 +101,7 @@ class ContactController extends Controller
             return response()->json([
                 "message"=>"you are not allowed"
             ]);
+
         }
 
         // $contact->update([
